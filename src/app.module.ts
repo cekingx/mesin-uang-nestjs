@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { WebhookController } from './controller/webhook.controller';
 import { TradeService } from './service/trade.service';
 import { PositionUtil } from './util/position.util';
 
@@ -13,7 +14,7 @@ import { PositionUtil } from './util/position.util';
     }),
     HttpModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, WebhookController],
   providers: [AppService, TradeService, PositionUtil],
 })
 export class AppModule {}

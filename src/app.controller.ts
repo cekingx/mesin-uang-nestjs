@@ -23,6 +23,7 @@ export class AppController {
       strategy: {
         order_action: 'buy',
         order_id: 'long',
+        order_contracts: '0.001',
       },
     } as TradingViewWebhook);
 

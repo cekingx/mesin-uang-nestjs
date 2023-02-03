@@ -6,6 +6,7 @@ import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
 import * as crypto from 'crypto';
 import { ConfigService } from '@nestjs/config';
+import { ByBitEndpoint } from '../constant/bybit.constant';
 
 @Injectable()
 export class TradeService {
@@ -32,7 +33,7 @@ export class TradeService {
         symbol: 'BTCUSDT',
         side: 'Buy',
         orderType: 'Market',
-        qty: '0.001',
+        qty: webhook.strategy.order_contracts,
         timeInForce: 'GoodTillCancel',
         reduce_only: false,
       };
@@ -42,7 +43,7 @@ export class TradeService {
         symbol: 'BTCUSDT',
         side: 'Sell',
         orderType: 'Market',
-        qty: '0.001',
+        qty: webhook.strategy.order_contracts,
         timeInForce: 'GoodTillCancel',
         reduce_only: true,
       };
@@ -52,7 +53,7 @@ export class TradeService {
         symbol: 'BTCUSDT',
         side: 'Sell',
         orderType: 'Market',
-        qty: '0.001',
+        qty: webhook.strategy.order_contracts,
         timeInForce: 'GoodTillCancel',
         reduce_only: false,
       };
@@ -62,7 +63,7 @@ export class TradeService {
         symbol: 'BTCUSDT',
         side: 'Buy',
         orderType: 'Market',
-        qty: '0.001',
+        qty: webhook.strategy.order_contracts,
         timeInForce: 'GoodTillCancel',
         reduce_only: true,
       };
@@ -81,10 +82,9 @@ export class TradeService {
   }
 
   async makeRequest(data: Record<string, any>) {
-    const endpoint =
-      'https://api-testnet.bybit.com/contract/v3/private/order/create';
+    const url = this.config.get('BYBIT_HOST') + ByBitEndpoint.ORDER;
     const timestamp = Date.now().toString();
-    const apiKey = process.env.API_KEY;
+    const apiKey = this.config.get('API_KEY');
     const config = {
       headers: {
         'X-BAPI-SIGN-TYPE': '2',
@@ -97,7 +97,7 @@ export class TradeService {
     };
 
     const { data: result } = await lastValueFrom(
-      this.httpService.post(endpoint, data, config),
+      this.httpService.post(url, data, config),
     );
 
     return result;
