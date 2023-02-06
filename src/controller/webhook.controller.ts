@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { TradingViewWebhook } from 'src/class/webhook';
-import { TradeService } from 'src/service/trade.service';
+import { TradingViewWebhook } from '../class/webhook';
+import { TradeService } from '../service/trade.service';
 
 @Controller('webhook')
 export class WebhookController {

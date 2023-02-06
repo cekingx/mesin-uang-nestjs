@@ -70,9 +70,8 @@ export class TradeService {
     }
   }
 
-  async makeSignature(parameters: string) {
+  async makeSignature(timestamp: string, parameters: string) {
     const recvWindow = 5000;
-    const timestamp = Date.now().toString();
     const apiKey = this.config.get('API_KEY');
     const secret = this.config.get('API_SECRET');
     return crypto
@@ -88,7 +87,10 @@ export class TradeService {
     const config = {
       headers: {
         'X-BAPI-SIGN-TYPE': '2',
-        'X-BAPI-SIGN': await this.makeSignature(JSON.stringify(data)),
+        'X-BAPI-SIGN': await this.makeSignature(
+          timestamp,
+          JSON.stringify(data),
+        ),
         'X-BAPI-API-KEY': apiKey,
         'X-BAPI-TIMESTAMP': timestamp,
         'X-BAPI-RECV-WINDOW': '5000',

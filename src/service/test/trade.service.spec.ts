@@ -34,7 +34,7 @@ describe('TradeService', () => {
     mockConfigService.get
       .mockImplementationOnce(() => 'api-key')
       .mockImplementationOnce(() => 'api-secret');
-    const signature = await service.makeSignature('');
+    const signature = await service.makeSignature(Date.now().toString(), '');
     expect(signature.length).toBe(64);
   });
 });
