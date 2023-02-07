@@ -2,12 +2,16 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PositionUtil } from '../../util/position.util';
+import { LoggerService } from '../logger.service';
 import { TradeService } from '../trade.service';
 
 const mockPositionUtil = {};
 const mockHttpService = {};
 const mockConfigService = {
   get: jest.fn(),
+};
+const mockLogService = {
+  trade: jest.fn(),
 };
 
 describe('TradeService', () => {
@@ -20,6 +24,7 @@ describe('TradeService', () => {
         { provide: PositionUtil, useValue: mockPositionUtil },
         { provide: HttpService, useValue: mockHttpService },
         { provide: ConfigService, useValue: mockConfigService },
+        { provide: LoggerService, useValue: mockLogService },
       ],
     }).compile();
 

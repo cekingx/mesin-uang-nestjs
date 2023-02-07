@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { WebhookController } from './controller/webhook.controller';
+import { LoggerService } from './service/logger.service';
 import { TradeService } from './service/trade.service';
 import { PositionUtil } from './util/position.util';
 
@@ -15,6 +16,6 @@ import { PositionUtil } from './util/position.util';
     HttpModule,
   ],
   controllers: [AppController, WebhookController],
-  providers: [AppService, TradeService, PositionUtil],
+  providers: [AppService, TradeService, PositionUtil, LoggerService],
 })
 export class AppModule {}

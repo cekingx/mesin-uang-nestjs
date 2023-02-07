@@ -7,6 +7,8 @@ import { lastValueFrom } from 'rxjs';
 import * as crypto from 'crypto';
 import { ConfigService } from '@nestjs/config';
 import { ByBitEndpoint } from '../constant/bybit.constant';
+import { LoggerService } from './logger.service';
+import { TRADE_ERROR, TRADE_EXECUTED } from '../message/trade.message';
 
 @Injectable()
 export class TradeService {
@@ -14,12 +16,17 @@ export class TradeService {
     private positionUtil: PositionUtil,
     private httpService: HttpService,
     private config: ConfigService,
+    private log: LoggerService,
   ) {}
 
   async makeTrade(webhook: TradingViewWebhook) {
     const payload = await this.makePayload(webhook);
     const result = await this.makeRequest(payload);
-    console.log('result', result);
+    if (result.retCode != 0) {
+      this.log.trade(TRADE_ERROR(result.retCode, result.retMsg));
+    } else {
+      this.log.trade(TRADE_EXECUTED(result.result.orderId));
+    }
 
     return result;
   }
