@@ -1,7 +1,3 @@
-export const WEBHOOK_RECEIVED = (position: string, amount: string): string => {
-  return `webhook received. ${position} for ${amount}`;
-};
-
 export const TRADE_EXECUTED = (id: string): string => {
   return `trade executed with id: ${id}`;
 };
